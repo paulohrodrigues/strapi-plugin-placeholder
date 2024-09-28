@@ -13,7 +13,8 @@ const canGeneratePlaceholder = (file) => {
   if (!file.mime) {
     // Only lookup the mime if file lacks the prop.
     const lookedUpMime = mimeTypes.lookup(file.name);
-    if(lookedUpMime) { // lookedUpMime can return false if it failed to match
+    if (lookedUpMime) {
+      // lookedUpMime can return false if it failed to match
       file.mime = lookedUpMime;
     }
   }
