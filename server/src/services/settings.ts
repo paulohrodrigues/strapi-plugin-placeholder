@@ -1,14 +1,13 @@
-'use strict';
+import { PLUGIN_ID } from '../pluginId';
+import type { Core } from '@strapi/strapi';
 
-const pluginId = require('../plugin-id');
-
-module.exports = ({ strapi }) => ({
+const settings = ({ strapi }: { strapi: Core.Strapi }) => ({
   /**
    * Helper that returns the plugin settings.
    * @returns {Object} the settings of the plugin
    */
 
-  get: () => strapi.config.get(`plugin.${pluginId}`),
+  get: (): object => strapi.config.get(`plugin::${PLUGIN_ID}`),
 
   /**
    * Helper that sets the plugin settings and returns them.
@@ -17,5 +16,7 @@ module.exports = ({ strapi }) => ({
    * @returns {Object} the new settings for the plugin
    */
 
-  set: (settings) => strapi.config.set(`plugin.${pluginId}`, settings),
+  set: (settings: { size: number }): object => strapi.config.set(`plugin::${PLUGIN_ID}`, settings),
 });
+
+export default settings;

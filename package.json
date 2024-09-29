@@ -1,6 +1,7 @@
 {
+  "$schema": "https://json.schemastore.org/package",
   "name": "strapi-plugin-placeholder",
-  "version": "4.4.1",
+  "version": "4.4.0",
   "description": "Generate base64 placeholders for Strapi images",
   "author": {
     "name": "@WalkingPizza",
@@ -10,41 +11,43 @@
     "type": "git",
     "url": "https://github.com/WalkingPizza/strapi-plugin-placeholder"
   },
-  "license": "MIT",
-  "type": "commonjs",
-  "exports": {
-    "./package.json": "./package.json",
-    "./strapi-server": {
-      "source": "./server/src/index.js",
-      "import": "./dist/server/index.mjs",
-      "require": "./dist/server/index.js",
-      "default": "./dist/server/index.js"
-    }
-  },
-  "scripts": {
-    "build": "strapi-plugin build",
-    "verify": "strapi-plugin verify",
-    "watch": "strapi-plugin watch",
-    "watch:link": "strapi-plugin watch:link"
-  },
-  "dependencies": {
-    "plaiceholder": "^2.3.0"
-  },
-  "devDependencies": {
-    "@strapi/sdk-plugin": "^5.2.6",
-    "@strapi/strapi": "^5.0.1",
-    "prettier": "^3.3.3"
-  },
-  "peerDependencies": {
-    "@strapi/sdk-plugin": "^5.2.6",
-    "@strapi/strapi": "^5.0.1",
-    "mime-types": "2.1.35",
-    "sharp": "^0.30.1"
-  },
   "strapi": {
     "name": "placeholder",
     "description": "Generate base64 placeholders for your Strapi images",
     "kind": "plugin",
     "displayName": "Placeholder"
+  },
+  "engines": {
+    "node": ">=12.x.x <=20.x.x",
+    "npm": ">=6.0.0"
+  },
+  "keywords": [
+    "strapi",
+    "strapi plugin",
+    "placeholder",
+    "plaiceholder",
+    "next",
+    "nextjs"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.658.1",
+    "@aws-sdk/s3-request-presigner": "^3.658.1",
+    "aws-sdk": "^2.1691.0",
+    "minio": "^8.0.1",
+    "plaiceholder": "^2.3.0"
+  },
+  "devDependencies": {
+    "@strapi/sdk-plugin": "^5.2.6",
+    "@strapi/strapi": "^5.0.1",
+    "@strapi/typescript-utils": "^5.0.1",
+    "@types/mime-types": "^2.1.4",
+    "prettier": "^3.3.3",
+    "typescript": "^5.6.2"
+  },
+  "peerDependencies": {
+    "mime-types": "2.1.35",
+    "plaiceholder": "^2.3.0",
+    "sharp": "^0.30.1"
   }
 }
