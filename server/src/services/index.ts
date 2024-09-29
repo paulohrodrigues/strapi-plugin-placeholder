@@ -1,10 +1,10 @@
 import placeholder from './placeholder';
-import minio from './minio';
+import bucket from './s3';
 import settings from './settings';
 
 const services = {
   placeholder,
-  minio,
+  bucket,
   settings,
 };
 

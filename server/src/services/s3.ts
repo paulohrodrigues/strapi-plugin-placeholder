@@ -1,6 +1,6 @@
 import AWS from 'aws-sdk';
 
-const minio = () => ({
+const bucket = () => ({
   async get({ settings, objectName }) {
     const s3 = new AWS.S3({
       endpoint: settings.endpoint,
@@ -8,7 +8,7 @@ const minio = () => ({
         accessKeyId: settings.accessKey,
         secretAccessKey: settings.secretKey,
       },
-      s3ForcePathStyle: true,
+      s3ForcePathStyle: settings.forcePathStyle,
     });
     return s3.getSignedUrl('getObject', {
       Bucket: settings.bucket,
@@ -18,4 +18,4 @@ const minio = () => ({
   },
 });
 
-export default minio;
+export default bucket;

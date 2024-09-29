@@ -21,7 +21,7 @@ const placeholder = ({ strapi }: { strapi: Core.Strapi }) => {
 
         if (provider === 'aws-s3') {
           const objectName = `${hash}${ext}`;
-          imageUrl = await getService(strapi, 'minio').get({ settings, objectName });
+          imageUrl = await getService(strapi, 'bucket').get({ settings, objectName });
           if (!imageUrl) return null;
         } else if (provider !== 'local') {
           strapi.log.warn(`Provider "${provider}" is not supported by the placeholder service.`);
