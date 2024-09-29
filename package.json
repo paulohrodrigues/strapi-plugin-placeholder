@@ -17,9 +17,27 @@
     "kind": "plugin",
     "displayName": "Placeholder"
   },
+  "type": "commonjs",
   "engines": {
     "node": ">=12.x.x <=20.x.x",
     "npm": ">=6.0.0"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    "./strapi-server": {
+      "types": "./dist/server/src/index.d.ts",
+      "source": "./server/src/index.ts",
+      "import": "./dist/server/index.mjs",
+      "require": "./dist/server/index.js",
+      "default": "./dist/server/index.js"
+    }
+  },
+  "scripts": {
+    "build": "strapi-plugin build",
+    "watch": "strapi-plugin watch",
+    "watch:link": "strapi-plugin watch:link",
+    "verify": "strapi-plugin verify",
+    "test:ts:back": "run -T tsc -p server/tsconfig.json"
   },
   "keywords": [
     "strapi",
@@ -33,8 +51,8 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.658.1",
     "@aws-sdk/s3-request-presigner": "^3.658.1",
+    "@strapi/admin": "^5.0.1",
     "aws-sdk": "^2.1691.0",
-    "minio": "^8.0.1",
     "plaiceholder": "^2.3.0"
   },
   "devDependencies": {
