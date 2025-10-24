@@ -1,6 +1,5 @@
 "use strict";
 const mimeTypes = require("mime-types");
-const plaiceholder = require("plaiceholder");
 const AWS = require("aws-sdk");
 const _interopDefault = (e) => e && e.__esModule ? e : { default: e };
 const mimeTypes__default = /* @__PURE__ */ _interopDefault(mimeTypes);
