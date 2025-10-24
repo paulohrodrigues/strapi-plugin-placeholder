@@ -58,7 +58,8 @@ const placeholder = ({ strapi }) => {
         const fetch2 = (await import("node-fetch")).default;
         const response = await fetch2(url);
         const buffer = Buffer.from(await response.arrayBuffer());
-        const { base64 } = await plaiceholder.getPlaiceholder(buffer, settings2);
+        const plaiceholder2 = await import("plaiceholder");
+        const { base64 } = await plaiceholder2.getPlaiceholder(buffer, settings2);
         return base64;
       } catch (error) {
         if (error.message && error.message.includes("unsupported file type")) {
