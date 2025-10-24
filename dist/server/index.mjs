@@ -1,7 +1,7 @@
 import mimeTypes from "mime-types";
 import { getPlaiceholder } from "plaiceholder";
 import AWS from "aws-sdk";
-const PLUGIN_ID = "strapi-plugin-placeholder";
+const PLUGIN_ID = "placeholder";
 const canGeneratePlaceholder = (file) => {
   if (!file.mime) {
     const lookedUpMime = mimeTypes.lookup(file.name);
@@ -26,12 +26,7 @@ const bootstrap = ({ strapi }) => {
     }
     if (!canGeneratePlaceholder(data))
       return;
-    data.placeholder = await getService(strapi, "placeholder").generate({
-      hash: data.hash,
-      ext: data.ext,
-      url: data.url,
-      provider: data.provider
-    });
+    data.placeholder = await getService(strapi, "placeholder").generate(data.url);
   };
   strapi.db.lifecycles.subscribe({
     models: ["plugin::upload.file"],
@@ -53,27 +48,19 @@ const config = {
 };
 const placeholder = ({ strapi }) => {
   return {
-    async generate({
-      hash,
-      ext,
-      url,
-      provider
-    }) {
+    async generate(url) {
       try {
         const settings2 = getService(strapi, "settings").get();
-        let imageUrl = url;
-        if (provider === "aws-s3") {
-          const objectName = `${hash}${ext}`;
-          imageUrl = await getService(strapi, "minio").get({ settings: settings2, objectName });
-          if (!imageUrl)
-            return null;
-        } else if (provider !== "local") {
-          strapi.log.warn(`Provider "${provider}" is not supported by the placeholder service.`);
-          return null;
-        }
-        const { base64 } = await getPlaiceholder(imageUrl, settings2);
+        const fetch2 = (await import("node-fetch")).default;
+        const response = await fetch2(url);
+        const buffer = Buffer.from(await response.arrayBuffer());
+        const { base64 } = await getPlaiceholder(buffer, settings2);
         return base64;
       } catch (error) {
+        if (error.message && error.message.includes("unsupported file type")) {
+          strapi.log.debug(`Skipping placeholder generation for unsupported image type`);
+          return null;
+        }
         strapi.log.error(error);
         return null;
       }
